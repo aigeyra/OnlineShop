@@ -10,13 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.onlineshop.dao.ProductDao;
 import com.example.onlineshop.entity.ProductEntity;
-
 @Service
 public class ProductServiceImpl implements ProductService {
-	Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+	private final ProductDao productDao;
 
 	@Autowired
-	ProductDao productDao;
+	public ProductServiceImpl(ProductDao productDao) {
+		this.productDao = productDao;
+	}
 
 	@Override
 	public List<ProductEntity> getAllProducts() {
@@ -30,5 +32,4 @@ public class ProductServiceImpl implements ProductService {
 		logger.info("Method saveProduct called");
 		return productDao.saveProduct(product);
 	}
-
 }

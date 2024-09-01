@@ -1,0 +1,1 @@
+INSERT INTO PRODUCT (code, name, description, stock, unit_price) VALUES ('P001', 'Product 1', 'Description for product 1', 100, 19.99);

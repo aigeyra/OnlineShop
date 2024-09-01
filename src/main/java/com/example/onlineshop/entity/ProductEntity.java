@@ -1,24 +1,29 @@
 package com.example.onlineshop.entity;
 
-import java.math.BigDecimal;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PRODUCT")
 public class ProductEntity {
+
 	@Id
 	private String code;
-	@Column
+
+	@Column(nullable = false)
 	private String name;
+
 	@Column
 	private String description;
-	@Column
+
+	@Column(nullable = false)
 	private Integer stock;
-	@Column
+
+	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal unitPrice;
 
 	public String getCode() {
@@ -33,16 +38,16 @@ public class ProductEntity {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Integer getStock() {
@@ -61,4 +66,32 @@ public class ProductEntity {
 		this.unitPrice = unitPrice;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		ProductEntity that = (ProductEntity) o;
+		return code.equals(that.code);
+	}
+
+	@Override
+	public int hashCode() {
+		return code.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "ProductEntity{" +
+				"code='" + code + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", stock=" + stock +
+				", unitPrice=" + unitPrice +
+				'}';
+	}
 }
