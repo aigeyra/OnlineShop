@@ -1,0 +1,79 @@
+openapi: 3.0.1
+info:
+  title: Product API
+  description: API for managing products in the warehouse.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      operationId: getAllProducts
+      tags:
+        - Product
+      responses:
+        '200':
+          description: Products successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        '204':
+          description: No products available
+        '500':
+          description: Internal server error
+    post:
+      summary: Save a new product
+      operationId: saveProduct
+      tags:
+        - Product
+      requestBody:
+        description: Product to be saved
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+      responses:
+        '201':
+          description: Product successfully saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Product is not valid
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    ProductDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "P001"
+        name:
+          type: string
+          example: "Product 1"
+        description:
+          type: string
+          example: "This is product 1"
+        stock:
+          type: integer
+          example: 100
+        unitPrice:
+          type: number
+          format: double
+          example: 29.99
+      required:
+        - code
+        - name
+        - unitPrice
