@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  description: API for managing products in the warehouse.
+  title: Product API
+  version: 1.0.0
+servers:
+- description: Local server
+  url: http://localhost:8080
+paths:
+  /api/products:
+    get:
+      operationId: getAllProducts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+                type: array
+          description: Products successfully retrieved
+        "204":
+          description: No products available
+        "500":
+          description: Internal server error
+      summary: Get all products
+      tags:
+      - Product
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Product
+    post:
+      operationId: saveProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+        description: Product to be saved
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+          description: Product successfully saved
+        "400":
+          description: Product is not valid
+        "500":
+          description: Internal server error
+      summary: Save a new product
+      tags:
+      - Product
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Product
+components:
+  schemas:
+    ProductDto:
+      example:
+        unitPrice: 29.99
+        code: P001
+        name: Product 1
+        description: This is product 1
+        stock: 100
+      properties:
+        code:
+          example: P001
+          type: string
+        name:
+          example: Product 1
+          type: string
+        description:
+          example: This is product 1
+          type: string
+        stock:
+          example: 100
+          type: integer
+        unitPrice:
+          example: 29.99
+          format: double
+          type: number
+      required:
+      - code
+      - name
+      - unitPrice
+      type: object
